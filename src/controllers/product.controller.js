@@ -1,4 +1,4 @@
-import Product from '../models/productModel.js';
+import Product from '../models/product.model.js';
 import cloudinary from '../utils/cloudinary.js';
 
 // Upload image using Multer and store URL in Cloudinary
