@@ -7,6 +7,8 @@ import app from "./app.js";
 dotenv.config({
     path: './.env'
 })
+
+//DataBase Connection
 connectDB()
 .then(() => {
     app.listen(process.env.PORT  ||3000 ,()=>{

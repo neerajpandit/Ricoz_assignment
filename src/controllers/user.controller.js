@@ -2,7 +2,7 @@ import {User} from "../models/user.model.js";
 import ErrorResponse from '../utils/errorResponse.js';
 import jwt from "jsonwebtoken";
 
-export const signup = async (req, res, next) => {
+const signup = async (req, res, next) => {
     const { email } = req.body;
     const userExist = await User.findOne({ email });
 
@@ -22,7 +22,7 @@ export const signup = async (req, res, next) => {
     }
 };
 
-export const signin = async (req, res, next) => {
+const signin = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -60,7 +60,7 @@ const generateToken = async (user, statusCode, res) => {
         .json({ success: true, token });
 };
 
-export const logout = (req, res, next) => {
+const logout = (req, res, next) => {
     res.clearCookie('token');
     res.status(200).json({
         success: true,
@@ -68,7 +68,7 @@ export const logout = (req, res, next) => {
     });
 };
 
-export const userProfile = async (req, res, next) => {
+const userProfile = async (req, res, next) => {
     const user = await User.findById(req.user.id);
     res.status(200).json({
         success: true,
@@ -76,7 +76,7 @@ export const userProfile = async (req, res, next) => {
     });
 };
 
-export const singleUser = async (req, res, next) => {
+const singleUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.params.id);
         res.status(200).json({
@@ -87,3 +87,11 @@ export const singleUser = async (req, res, next) => {
         next(error);
     }
 };
+
+export{
+    signup,
+    signin,
+    logout,
+    userProfile,
+    singleUser
+}

@@ -1,26 +1,7 @@
 import Product from '../models/product.model.js';
-import cloudinary from '../utils/cloudinary.js';
-
-// Upload image using Multer and store URL in Cloudinary
 
 
-export const uploadImage = async (req, res, next) => {
-    try {
-        if (!req.file) {
-            return res.status(400).json({ error: 'No image uploaded' });
-        }
-
-        const result = await cloudinary.uploader.upload(req.file.path);
-        req.imageURL = result.secure_url;
-        next();
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Image upload failed' });
-    }
-};
-
-// Create a new product
-export const createProduct = async (req, res) => {
+const createProduct = async (req, res) => {
     try {
         const { title, description, price } = req.body;
         const image = req.imageURL;
@@ -34,7 +15,7 @@ export const createProduct = async (req, res) => {
 };
 
 // Get all products
-export const getAllProducts = async (req, res) => {
+const getAllProducts = async (req, res) => {
     try {
         const products = await Product.find();
         res.status(200).json({ success: true, products });
@@ -45,7 +26,7 @@ export const getAllProducts = async (req, res) => {
 };
 
 // Get product by ID
-export const getProductById = async (req, res) => {
+const getProductById = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
         if (!product) {
@@ -59,7 +40,7 @@ export const getProductById = async (req, res) => {
 };
 
 // Update product by ID
-export const updateProductById = async (req, res) => {
+const updateProductById = async (req, res) => {
     try {
         const { title, description, price } = req.body;
         const image = req.imageURL;
@@ -83,7 +64,7 @@ export const updateProductById = async (req, res) => {
 };
 
 // Delete product by ID
-export const deleteProductById = async (req, res) => {
+const deleteProductById = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
         if (!product) {
@@ -97,3 +78,11 @@ export const deleteProductById = async (req, res) => {
         res.status(500).json({ error: 'Failed to delete product' });
     }
 };
+
+export {
+    createProduct,
+    getAllProducts,
+    getProductById,
+    updateProductById,
+    deleteProductById,
+}

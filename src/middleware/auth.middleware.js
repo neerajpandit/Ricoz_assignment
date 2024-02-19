@@ -3,7 +3,7 @@ import {User} from "../models/user.model.js";
 import ErrorResponse from '../utils/errorResponse.js';
 
 // Check if user is authenticated
-export const isAuthenticated = async (req, res, next) => {
+const isAuthenticated = async (req, res, next) => {
     const { token } = req.cookies;
 
     // Make sure token exists
@@ -22,9 +22,14 @@ export const isAuthenticated = async (req, res, next) => {
 };
 
 // Admin middleware
-export const isAdmin = (req, res, next) => {
+const isAdmin = (req, res, next) => {
     if (req.user.role === 0) {
         return next(new ErrorResponse('Access denied, you must be an admin', 401));
     }
     next();
 };
+
+export{
+    isAuthenticated,
+    isAdmin
+}
