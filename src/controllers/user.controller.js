@@ -53,7 +53,6 @@ const generateToken = async (user, statusCode, res) => {
         httpOnly: true,
         expires: new Date(Date.now() + process.env.EXPIRE_TOKEN)
     };
-
     res
         .status(statusCode)
         .cookie('token', token, options)
